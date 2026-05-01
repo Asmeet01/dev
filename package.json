@@ -1,0 +1,20 @@
+{
+  "name": "devops-dashboard",
+  "version": "1.0.0",
+  "description": "DevSecOps Dashboard with Python Flask backend",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py",
+    "dev": "set FLASK_DEBUG=true&& .\\.venv_app\\Scripts\\python.exe app.py",
+    "install-py": "pip install -r requirements.txt",
+    "docker-build": "docker build -t devsecops-dashboard .",
+    "docker-run": "docker run -p 5000:5000 devsecops-dashboard"
+  },
+  "keywords": [
+    "flask",
+    "devsecops",
+    "security"
+  ],
+  "author": "",
+  "license": "ISC"
+}

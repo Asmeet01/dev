@@ -19,3 +19,6 @@ markupsafe==3.0.3
 certifi==2026.2.25
 charset_normalizer==3.4.7
 idna==3.10
+
+# Production Server
+gunicorn==23.0.0

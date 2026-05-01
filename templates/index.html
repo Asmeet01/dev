@@ -82,7 +82,7 @@
         /* --- Repo Input Bar --- */
         .repo-bar {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
+            grid-template-columns: 1fr 1fr auto;
             gap: 20px;
             align-items: flex-end;
         }
@@ -211,7 +211,7 @@
             color: var(--warning);
         }
 
-        /* --- Table / Recent Runs --- */
+        /* --- Section Title --- */
         .section-title {
             display: flex;
             align-items: center;
@@ -222,34 +222,97 @@
             color: var(--text-main);
         }
 
+        /* --- Modern Run Cards --- */
         .run-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
-        .run-item {
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
+        .run-card {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.2s, transform 0.2s;
         }
 
-        .run-item:last-child {
-            border-bottom: none;
+        .run-card:hover {
+            box-shadow: 0 4px 16px rgba(99,102,241,0.10);
+            transform: translateY(-1px);
         }
 
-        .run-info h4 {
-            font-size: 1rem;
-            margin-bottom: 4px;
+        .run-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .run-icon.success { background: #d1fae5; color: #059669; }
+        .run-icon.failure { background: #fee2e2; color: #dc2626; }
+        .run-icon.cancelled { background: #fef3c7; color: #d97706; }
+        .run-icon.in-progress { background: #e0e7ff; color: #4f46e5; }
+        .run-icon.unknown { background: #f1f5f9; color: #64748b; }
+
+        .run-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .run-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .run-meta {
-            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .run-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
 
+        .run-badge {
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-failure { background: #fee2e2; color: #991b1b; }
+        .badge-cancelled { background: #fef3c7; color: #92400e; }
+        .badge-in_progress { background: #e0e7ff; color: #3730a3; }
+        .badge-unknown { background: #f1f5f9; color: #475569; }
+
+        .run-number {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        /* Legacy badge for scan section */
         .status-badge {
             padding: 4px 12px;
             border-radius: 100px;
@@ -258,14 +321,127 @@
             text-transform: uppercase;
         }
 
-        .status-success {
-            background: #d1fae5;
-            color: #065f46;
+        .status-success { background: #d1fae5; color: #065f46; }
+        .status-failure { background: #fee2e2; color: #991b1b; }
+
+        /* --- Lab Status Bar --- */
+        .lab-status-bar {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 14px;
+            padding: 20px 28px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(99,102,241,0.25);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .status-failure {
-            background: #fee2e2;
-            color: #991b1b;
+        .lab-status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .lab-status-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10b981;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 0 rgba(16,185,129,0.7);
+            animation: pulse-ring 1.8s ease-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+            100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+        }
+
+        .lab-status-timestamp {
+            font-size: 0.78rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .lab-status-experiments {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .exp-status-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .exp-status-item:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(99,102,241,0.3);
+        }
+
+        .exp-status-name {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .exp-status-val {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .exp-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .exp-pill.idle     { background: rgba(100,116,139,0.2); color: #94a3b8; }
+        .exp-pill.running  { background: rgba(99,102,241,0.2);  color: #818cf8; }
+        .exp-pill.vuln     { background: rgba(239,68,68,0.2);   color: #f87171; }
+        .exp-pill.secure   { background: rgba(16,185,129,0.2);  color: #34d399; }
+        .exp-pill.tested   { background: rgba(245,158,11,0.2);  color: #fbbf24; }
+
+        .exp-pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
         }
 
         /* --- Lab Exercises (The "Information") --- */
@@ -301,6 +477,12 @@
             border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .lab-btn:hover {
+            background: #334155;
+            transform: translateY(-1px);
         }
 
         .result-box {
@@ -336,6 +518,250 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ===== EXPERIMENT PLAN STYLES ===== */
+        .exp-plan-wrapper {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(99,102,241,0.3);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exp-plan-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .exp-plan-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; left: -40px;
+            width: 160px; height: 160px;
+            background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .exp-plan-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .exp-plan-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .exp-plan-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #6366f1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .exp-plan-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            letter-spacing: -0.02em;
+        }
+
+        .exp-plan-subtitle {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .exp-plan-progress-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            min-width: 160px;
+        }
+
+        .exp-plan-progress-label {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .exp-plan-progress-bar {
+            width: 160px;
+            height: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .exp-plan-progress-fill {
+            height: 100%;
+            border-radius: 100px;
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .exp-plan-pct {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #818cf8;
+        }
+
+        /* Phase rows */
+        .exp-phases {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .exp-phase-row {
+            display: grid;
+            grid-template-columns: 90px 1fr;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .exp-phase-label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-top: 14px;
+        }
+
+        .exp-phase-tag {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .phase-recon   { background: rgba(99,102,241,0.18); color: #818cf8; }
+        .phase-attack  { background: rgba(239,68,68,0.18);  color: #f87171; }
+        .phase-defense { background: rgba(16,185,129,0.18); color: #34d399; }
+        .phase-cicd    { background: rgba(245,158,11,0.18); color: #fbbf24; }
+
+        .exp-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .exp-step {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 14px 18px;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            cursor: default;
+        }
+
+        .exp-step:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(99,102,241,0.3);
+            transform: translateX(3px);
+        }
+
+        .exp-step-num {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .step-num-done    { background: rgba(16,185,129,0.2);  color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+        .step-num-active  { background: rgba(99,102,241,0.25); color: #818cf8; border: 1px solid rgba(99,102,241,0.4); animation: step-glow 2s ease-in-out infinite; }
+        .step-num-pending { background: rgba(255,255,255,0.05); color: #475569; border: 1px solid rgba(255,255,255,0.08); }
+
+        @keyframes step-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.3); }
+            50%       { box-shadow: 0 0 0 6px rgba(99,102,241,0); }
+        }
+
+        .exp-step-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .exp-step-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .exp-step-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .exp-step-desc {
+            font-size: 0.78rem;
+            color: #64748b;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .exp-step-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        .step-done    { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+        .step-active  { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+        .step-pending { background: rgba(100,116,139,0.1); color: #475569; border: 1px solid rgba(100,116,139,0.15); }
+        .step-warn    { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+
+        .exp-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.2), transparent);
+            margin: 6px 0;
+        }
+
+        @media (max-width: 768px) {
+            .exp-phase-row { grid-template-columns: 1fr; }
+            .exp-phase-label { justify-content: flex-start; padding-top: 0; }
+            .exp-plan-progress-wrap { align-items: flex-start; }
+        }
     </style>
 </head>
 
@@ -344,102 +770,213 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>🚀 DevOps Pipeline Dashboard</h1>
+            <h1> Implement CI/CD Pipeline</h1>
             <p>Real-time GitHub Actions Metrics & Security Auditing</p>
         </div>
 
-        <!-- Repo Config -->
-        <div class="card repo-bar">
-            <div class="form-group">
-                <label>Repository Owner</label>
-                <input type="text" placeholder="e.g. ibraheemcisse" value="ibraheemcisse">
-            </div>
-            <div class="form-group">
-                <label>Repository Name</label>
-                <input type="text" placeholder="e.g. devops-dashboard" value="devops-dashboard">
-            </div>
-            <div class="form-group">
-                <label>GitHub Token (Optional)</label>
-                <input type="password" placeholder="ghp_xxxxxxxxxxxx">
-            </div>
-            <button class="btn-fetch">
-                <i data-lucide="bar-chart-3"></i> Fetch Real Metrics
-            </button>
-        </div>
-
-        <!-- Alert / Token Instructions -->
-        <div class="card alert-card">
-            <h3>🔑 GitHub Token Setup (Recommended)</h3>
-            <ul>
-                <li>Go to GitHub Settings → Developer settings → Personal access tokens</li>
-                <li>Generate a token with "repo" and "actions:read" permissions</li>
-                <li>Paste it above to avoid rate limits (60 requests/hour without token, 5000 with token)</li>
-                <li>For public repos, token is optional but recommended</li>
-            </ul>
-        </div>
-
-        <!-- Metrics Grid -->
-        <div class="metrics-grid">
-            <div class="card metric-card">
-                <div class="label"><i data-lucide="trending-up"></i> Success Rate</div>
-                <div class="value text-success">100%</div>
-                <div class="subtitle">Pipeline success percentage</div>
-            </div>
-            <div class="card metric-card">
-                <div class="label"><i data-lucide="layers"></i> Total Builds</div>
-                <div class="value">7</div>
-                <div class="subtitle">All workflow runs</div>
-            </div>
-            <div class="card metric-card">
-                <div class="label"><i data-lucide="zap"></i> Avg Build Time</div>
-                <div class="value text-warning">1m</div>
-                <div class="subtitle">Average duration</div>
-            </div>
-            <div class="card metric-card">
-                <div class="label"><i data-lucide="git-merge"></i> Active Workflows</div>
-                <div class="value">2</div>
-                <div class="subtitle">Currently configured</div>
-            </div>
-        </div>
-
-        <!-- Recent Runs -->
-        <div class="card">
-            <div class="section-title">
-                <i data-lucide="clipboard-list"></i> Recent Pipeline Runs
-            </div>
-            <div class="run-list">
-                <div class="run-item">
-                    <div class="run-info">
-                        <h4>Create index.html</h4>
-                        <div class="run-meta">DevOps Pipeline • Branch: main • 5m ago • ibraheemcisse</div>
+        <!-- ===== DEVOPS EXPERIMENT PLAN ===== -->
+        <div class="exp-plan-wrapper">
+            <div class="exp-plan-header">
+                <div class="exp-plan-header-left">
+                    <div class="exp-plan-label">
+                        <i data-lucide="flask-conical" style="width:13px;height:13px;"></i>
+                        DevSecOps Lab &middot; Experiment Roadmap
                     </div>
-                    <span class="status-badge status-success">Success</span>
+                    <div class="exp-plan-title">🔬 DevSecOps Experiment Plan</div>
+                    <div class="exp-plan-subtitle">6 security experiments across 4 phases &mdash; Build, Attack, Detect &amp; Defend</div>
                 </div>
-                <div class="run-item">
-                    <div class="run-info">
-                        <h4>Configure SAST/SCA Scan</h4>
-                        <div class="run-meta">DevOps Pipeline • Branch: dev • 1h ago • ibraheemcisse</div>
+                <div class="exp-plan-progress-wrap">
+                    <div class="exp-plan-progress-label">Overall Completion</div>
+                    <div class="exp-plan-progress-bar">
+                        <div class="exp-plan-progress-fill" id="plan-progress-fill" style="width: 33%;"></div>
                     </div>
-                    <span class="status-badge status-success">Success</span>
-                </div>
-                <div class="run-item">
-                    <div class="run-info">
-                        <h4>Initial App Commit</h4>
-                        <div class="run-meta">DevOps Pipeline • Branch: main • 2h ago • ibraheemcisse</div>
-                    </div>
-                    <span class="status-badge status-success">Success</span>
+                    <div class="exp-plan-pct" id="plan-progress-pct">2 / 6 Done</div>
                 </div>
             </div>
-        </div>
 
-        <!-- Security Lab Section (Existing Information) -->
+            <div class="exp-phases">
+
+                <!-- Phase 1: Setup -->
+                <div class="exp-phase-row">
+                    <div class="exp-phase-label">
+                        <span class="exp-phase-tag phase-recon">Setup</span>
+                    </div>
+                    <div class="exp-steps">
+                        <div class="exp-step" data-exp="1">
+                            <div class="exp-step-num step-num-pending">1</div>
+                            <div class="exp-step-icon" style="background:rgba(16,185,129,0.12);color:#34d399;">
+                                <i data-lucide="git-branch" style="width:18px;height:18px;"></i>
+                            </div>
+                            <div class="exp-step-body">
+                                <div class="exp-step-name">Exp 1 &mdash; Repository &amp; CI/CD Bootstrapping</div>
+                                <div class="exp-step-desc">Flask app scaffolding &middot; GitHub Actions workflow &middot; Branch protection rules</div>
+                            </div>
+                            <span class="exp-step-status step-pending"><i data-lucide="circle" style="width:11px;height:11px;"></i> Pending</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exp-divider"></div>
+
+                <!-- Phase 2: Attack -->
+                <div class="exp-phase-row">
+                    <div class="exp-phase-label">
+                        <span class="exp-phase-tag phase-attack">Attack</span>
+                    </div>
+                    <div class="exp-steps">
+                        <div class="exp-step" data-exp="2">
+                            <div class="exp-step-num step-num-pending">2</div>
+                            <div class="exp-step-icon" style="background:rgba(239,68,68,0.12);color:#f87171;">
+                                <i data-lucide="terminal" style="width:18px;height:18px;"></i>
+                            </div>
+                            <div class="exp-step-body">
+                                <div class="exp-step-name">Exp 2 &mdash; Reflected XSS Injection</div>
+                                <div class="exp-step-desc">Inject &lt;script&gt; payloads into unescaped search endpoint &middot; Verify browser execution</div>
+                            </div>
+                            <span class="exp-step-status step-pending"><i data-lucide="circle" style="width:11px;height:11px;"></i> Pending</span>
+                        </div>
+                        <div class="exp-step" data-exp="3">
+                            <div class="exp-step-num step-num-pending">3</div>
+                            <div class="exp-step-icon" style="background:rgba(239,68,68,0.12);color:#f87171;">
+                                <i data-lucide="database" style="width:18px;height:18px;"></i>
+                            </div>
+                            <div class="exp-step-body">
+                                <div class="exp-step-name">Exp 3 &mdash; SQL Injection Auth Bypass</div>
+                                <div class="exp-step-desc">Use ' OR '1'='1 to bypass login &middot; Observe unsanitized query execution</div>
+                            </div>
+                            <span class="exp-step-status step-pending"><i data-lucide="circle" style="width:11px;height:11px;"></i> Pending</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exp-divider"></div>
+
+                <!-- Phase 3: Detect -->
+                <div class="exp-phase-row">
+                    <div class="exp-phase-label">
+                        <span class="exp-phase-tag phase-defense">Detect</span>
+                    </div>
+                    <div class="exp-steps">
+                        <div class="exp-step" data-exp="4">
+                            <div class="exp-step-num step-num-pending">4</div>
+                            <div class="exp-step-icon" style="background:rgba(99,102,241,0.12);color:#818cf8;">
+                                <i data-lucide="scan" style="width:18px;height:18px;"></i>
+                            </div>
+                            <div class="exp-step-body">
+                                <div class="exp-step-name">Exp 4 &mdash; DAST Automated Scanning</div>
+                                <div class="exp-step-desc">Run DAST scanner against Flask endpoints &middot; Map XSS &amp; SQLi attack surface</div>
+                            </div>
+                            <span class="exp-step-status step-pending"><i data-lucide="circle" style="width:11px;height:11px;"></i> Pending</span>
+                        </div>
+                        <div class="exp-step" data-exp="5">
+                            <div class="exp-step-num step-num-pending">5</div>
+                            <div class="exp-step-icon" style="background:rgba(99,102,241,0.12);color:#818cf8;">
+                                <i data-lucide="shield-check" style="width:18px;height:18px;"></i>
+                            </div>
+                            <div class="exp-step-body">
+                                <div class="exp-step-name">Exp 5 &mdash; SAST with SonarCloud</div>
+                                <div class="exp-step-desc">Static code analysis &middot; Detect hardcoded secrets &middot; Code smell &amp; vulnerability reports</div>
+                            </div>
+                            <span class="exp-step-status step-pending"><i data-lucide="circle" style="width:11px;height:11px;"></i> Pending</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exp-divider"></div>
+
+                <!-- Phase 4: CI/CD Security Gate -->
+                <div class="exp-phase-row">
+                    <div class="exp-phase-label">
+                        <span class="exp-phase-tag phase-cicd">CI/CD</span>
+                    </div>
+                    <div class="exp-steps">
+                        <div class="exp-step" data-exp="6">
+                            <div class="exp-step-num step-num-pending">6</div>
+                            <div class="exp-step-icon" style="background:rgba(245,158,11,0.12);color:#fbbf24;">
+                                <i data-lucide="container" style="width:18px;height:18px;"></i>
+                            </div>
+                            <div class="exp-step-body">
+                                <div class="exp-step-name">Exp 6 &mdash; SCA + Container Security Gate</div>
+                                <div class="exp-step-desc">pip-audit dependency scan &middot; Trivy Docker image scan &middot; Block pipeline on critical CVEs</div>
+                            </div>
+                            <span class="exp-step-status step-pending"><i data-lucide="circle" style="width:11px;height:11px;"></i> Pending</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- ===== END EXPERIMENT PLAN ===== -->
+
+        <!-- Security Lab Section -->
         <div class="section-title" style="color: white; margin-top: 40px;">
             <i data-lucide="shield-alert"></i> DevSecOps Security Lab Experiments
+        </div>
+
+        <!-- Current Status Bar -->
+        <div class="lab-status-bar">
+            <div class="lab-status-header">
+                <div class="lab-status-title">
+                    <div class="pulse-dot" id="lab-pulse"></div>
+                    <i data-lucide="activity" style="width:16px;height:16px;color:#818cf8;"></i>
+                    Current Lab Status
+                </div>
+                <div class="lab-status-timestamp">
+                    <i data-lucide="clock" style="width:13px;height:13px;"></i>
+                    <span id="lab-last-updated">Awaiting first experiment run...</span>
+                </div>
+            </div>
+            <div class="lab-status-experiments">
+                <!-- XSS Status -->
+                <div class="exp-status-item">
+                    <div class="exp-status-name">
+                        <i data-lucide="terminal" style="width:13px;height:13px;"></i>
+                        XSS Lab
+                    </div>
+                    <div class="exp-status-val" id="xss-status-val">—</div>
+                    <span class="exp-pill idle" id="xss-status-pill">
+                        <span class="exp-pill-dot"></span> Idle
+                    </span>
+                </div>
+                <!-- SQLi Status -->
+                <div class="exp-status-item">
+                    <div class="exp-status-name">
+                        <i data-lucide="database" style="width:13px;height:13px;"></i>
+                        SQL Injection Lab
+                    </div>
+                    <div class="exp-status-val" id="sqli-status-val">—</div>
+                    <span class="exp-pill idle" id="sqli-status-pill">
+                        <span class="exp-pill-dot"></span> Idle
+                    </span>
+                </div>
+                <!-- DAST Scanner Status -->
+                <div class="exp-status-item">
+                    <div class="exp-status-name">
+                        <i data-lucide="scan" style="width:13px;height:13px;"></i>
+                        DAST Scanner
+                    </div>
+                    <div class="exp-status-val" id="dast-status-val">—</div>
+                    <span class="exp-pill idle" id="dast-status-pill">
+                        <span class="exp-pill-dot"></span> Idle
+                    </span>
+                </div>
+                <!-- Overall -->
+                <div class="exp-status-item">
+                    <div class="exp-status-name">
+                        <i data-lucide="shield" style="width:13px;height:13px;"></i>
+                        Overall Risk
+                    </div>
+                    <div class="exp-status-val" id="overall-risk-val">Unknown</div>
+                    <span class="exp-pill idle" id="overall-risk-pill">
+                        <span class="exp-pill-dot"></span> No Data
+                    </span>
+                </div>
+            </div>
         </div>
         <div class="lab-grid">
             <!-- XSS Lab -->
             <div class="card lab-card">
-                <h3><i data-lucide="terminal"></i> Reflected XSS (T1189)</h3>
+                <h3><i data-lucide="terminal"></i> Reflected XSS Attacks</h3>
                 <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">Test how unsanitized
                     inputs affect the browser environment.</p>
                 <form action="/search" method="get" class="lab-form">
@@ -456,7 +993,7 @@
 
             <!-- SQLi Lab -->
             <div class="card lab-card">
-                <h3><i data-lucide="database"></i> SQL Injection (T1190)</h3>
+                <h3><i data-lucide="database"></i> SQL Injection Attacks</h3>
                 <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">Attempt to bypass
                     authentication using SQL interpolation flaws.</p>
                 <form action="/login" method="post" class="lab-form">
@@ -467,14 +1004,558 @@
             </div>
         </div>
 
+        <!-- Repo Config -->
+        <div class="card repo-bar">
+            <div class="form-group">
+                <label>Repository Owner</label>
+                <input type="text" id="repo-owner" placeholder="e.g. facebook" value="facebook">
+            </div>
+            <div class="form-group">
+                <label>Repository Name</label>
+                <input type="text" id="repo-name" placeholder="e.g. react" value="react">
+            </div>
+            <button class="btn-fetch" id="btn-fetch-metrics">
+                <i data-lucide="search"></i> Analyze Repository
+            </button>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+            <div class="card metric-card">
+                <div class="label"><i data-lucide="star"></i> Stars</div>
+                <div class="value text-warning" id="val-stars">0</div>
+                <div class="subtitle">Repository stars</div>
+            </div>
+            <div class="card metric-card">
+                <div class="label"><i data-lucide="git-branch"></i> Forks</div>
+                <div class="value" id="val-forks">0</div>
+                <div class="subtitle">Repository forks</div>
+            </div>
+            <div class="card metric-card">
+                <div class="label"><i data-lucide="alert-circle"></i> Open Issues</div>
+                <div class="value text-danger" id="val-issues">0</div>
+                <div class="subtitle">Unresolved issues</div>
+            </div>
+            <div class="card metric-card">
+                <div class="label"><i data-lucide="code"></i> Language</div>
+                <div class="value text-success" id="val-language" style="font-size: 1.5rem;">N/A</div>
+                <div class="subtitle">Primary language</div>
+            </div>
+        </div>
+
+        <!-- Recent Runs -->
+        <div class="card">
+            <div class="section-title">
+                <i data-lucide="git-pull-request"></i> Recent Workflow Runs
+            </div>
+            <div class="run-list" id="run-list-container">
+                <div style="color: var(--text-muted); font-size: 0.9rem; padding: 10px 0; display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="info" style="width:16px;height:16px;"></i>
+                    Enter a repository above and click <strong style="color:var(--primary);">&nbsp;Analyze Repository&nbsp;</strong> to load real workflow runs.
+                </div>
+            </div>
+        </div>
+
+        <!-- Automated Security Scanner Section -->
+        <div class="section-title" style="color: white; margin-top: 40px;">
+            <i data-lucide="scan"></i> Automated Vulnerability Scanner (DAST)
+        </div>
+        <div class="card">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">
+                Enter a URL below to perform a real-time security scan for XSS and SQL Injection vulnerabilities.
+            </p>
+            <div class="repo-bar" style="grid-template-columns: 1fr auto;">
+                <div class="form-group">
+                    <label>Target URL to Scan</label>
+                    <input type="text" id="scan-url" placeholder="e.g. http://127.0.0.1:5000/search" value="http://127.0.0.1:5000/search">
+                </div>
+                <button class="btn-fetch" id="btn-start-scan" style="background: var(--danger);">
+                    <i data-lucide="play"></i> Start Security Scan
+                </button>
+            </div>
+
+            <div id="scan-results" style="margin-top: 24px; display: none;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <!-- XSS Result -->
+                    <div id="result-xss" class="card" style="margin-bottom: 0; border-left: 5px solid var(--border);">
+                        <h4 style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                            <i data-lucide="terminal"></i> XSS Vulnerability
+                        </h4>
+                        <div class="status-badge" id="badge-xss">Checking...</div>
+                        <p id="details-xss" style="margin-top: 12px; font-size: 0.875rem; color: var(--text-muted);"></p>
+                    </div>
+                    <!-- SQLi Result -->
+                    <div id="result-sqli" class="card" style="margin-bottom: 0; border-left: 5px solid var(--border);">
+                        <h4 style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                            <i data-lucide="database"></i> SQLi Vulnerability
+                        </h4>
+                        <div class="status-badge" id="badge-sqli">Checking...</div>
+                        <p id="details-sqli" style="margin-top: 12px; font-size: 0.875rem; color: var(--text-muted);"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <footer style="margin-top: 40px; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.875rem;">
             &copy; 2026 SecurityLab DevSecOps Research Project. For educational use only.
         </footer>
     </div>
 
     <script>
+        // --- Real Metrics Fetching ---
+        document.getElementById('btn-fetch-metrics').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-fetch-metrics');
+            const owner = document.getElementById('repo-owner').value.trim();
+            const repo = document.getElementById('repo-name').value.trim();
+            
+            if (!owner || !repo) {
+                return alert("Please enter both Repository Owner and Name.");
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin"></i> Analyzing...';
+            lucide.createIcons();
+
+            try {
+                const response = await fetch('/repo-metrics', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ owner, repo, token: '' })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || "Failed to fetch metrics.");
+                }
+
+                // Update metrics grid
+                document.getElementById('val-stars').innerText = data.metrics.stars.toLocaleString();
+                document.getElementById('val-forks').innerText = data.metrics.forks.toLocaleString();
+                document.getElementById('val-issues').innerText = data.metrics.open_issues.toLocaleString();
+                document.getElementById('val-language').innerText = data.metrics.language;
+
+                // Build modern run cards
+                const runContainer = document.getElementById('run-list-container');
+                runContainer.innerHTML = '';
+                
+                if (data.recent_runs && data.recent_runs.length > 0) {
+                    data.recent_runs.forEach(run => {
+                        const conclusion = run.conclusion || run.status || 'unknown';
+                        const iconClass = conclusion === 'success' ? 'success'
+                            : conclusion === 'failure' ? 'failure'
+                            : conclusion === 'cancelled' ? 'cancelled'
+                            : conclusion === 'in_progress' ? 'in-progress'
+                            : 'unknown';
+                        const badgeClass = 'badge-' + (conclusion === 'in_progress' ? 'in_progress' : conclusion);
+                        const iconName = conclusion === 'success' ? 'check-circle-2'
+                            : conclusion === 'failure' ? 'x-circle'
+                            : conclusion === 'cancelled' ? 'ban'
+                            : conclusion === 'in_progress' ? 'loader-2'
+                            : 'circle';
+
+                        const rawDate = new Date(run.updated_at);
+                        const timeAgo = (() => {
+                            const diff = Math.floor((Date.now() - rawDate) / 1000);
+                            if (diff < 60) return diff + 's ago';
+                            if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+                            if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+                            return Math.floor(diff/86400) + 'd ago';
+                        })();
+
+                        runContainer.innerHTML += `
+                            <div class="run-card">
+                                <div class="run-icon ${iconClass}">
+                                    <i data-lucide="${iconName}" style="width:20px;height:20px;"></i>
+                                </div>
+                                <div class="run-body">
+                                    <div class="run-title">${run.name}</div>
+                                    <div class="run-meta">
+                                        <span class="run-meta-item"><i data-lucide="git-branch" style="width:12px;height:12px;"></i>${run.branch || 'N/A'}</span>
+                                        <span class="run-meta-item"><i data-lucide="clock" style="width:12px;height:12px;"></i>${timeAgo}</span>
+                                        <span class="run-meta-item">#${run.id}</span>
+                                    </div>
+                                </div>
+                                <span class="run-badge ${badgeClass}">${conclusion.replace('_',' ')}</span>
+                            </div>
+                        `;
+                    });
+                    lucide.createIcons();
+                } else {
+                    runContainer.innerHTML = `<div style="color: var(--text-muted); font-size: 0.9rem; padding: 16px 0; display:flex; align-items:center; gap:8px;">
+                        <i data-lucide="info" style="width:16px;height:16px;"></i>
+                        No GitHub Actions workflow runs found for this repository.
+                    </div>`;
+                    lucide.createIcons();
+                }
+
+            } catch (error) {
+                const runContainer = document.getElementById('run-list-container');
+                runContainer.innerHTML = `<div style="color: var(--danger); font-size: 0.9rem; padding: 16px 0; display:flex; align-items:center; gap:8px;">
+                    <i data-lucide="alert-triangle" style="width:16px;height:16px;"></i>
+                    ${error.message}
+                </div>`;
+                lucide.createIcons();
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="search"></i> Analyze Repository';
+                lucide.createIcons();
+            }
+        });
+
         // Initialize Lucide Icons
         lucide.createIcons();
+
+        // --- Scanner Logic ---
+        document.getElementById('btn-start-scan').addEventListener('click', async () => {
+            const url = document.getElementById('scan-url').value;
+            const resultsDiv = document.getElementById('scan-results');
+            const btn = document.getElementById('btn-start-scan');
+            
+            if (!url) return alert("Please enter a URL to scan.");
+
+            // Reset UI
+            resultsDiv.style.display = 'block';
+            btn.disabled = true;
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin"></i> Scanning...';
+            lucide.createIcons();
+
+            document.getElementById('badge-xss').className = 'status-badge';
+            document.getElementById('badge-xss').innerText = 'Scanning...';
+            document.getElementById('badge-sqli').className = 'status-badge';
+            document.getElementById('badge-sqli').innerText = 'Scanning...';
+            
+            try {
+                const response = await fetch('/scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
+                });
+                
+                const data = await response.json();
+
+                // Update XSS UI
+                const xssBadge = document.getElementById('badge-xss');
+                if (data.xss.vulnerable) {
+                    xssBadge.innerText = 'VULNERABLE';
+                    xssBadge.className = 'status-badge status-failure';
+                    document.getElementById('result-xss').style.borderColor = 'var(--danger)';
+                } else {
+                    xssBadge.innerText = 'SECURE';
+                    xssBadge.className = 'status-badge status-success';
+                    document.getElementById('result-xss').style.borderColor = 'var(--success)';
+                }
+                document.getElementById('details-xss').innerText = data.xss.details;
+
+                // Update SQLi UI
+                const sqliBadge = document.getElementById('badge-sqli');
+                if (data.sqli.vulnerable) {
+                    sqliBadge.innerText = 'VULNERABLE';
+                    sqliBadge.className = 'status-badge status-failure';
+                    document.getElementById('result-sqli').style.borderColor = 'var(--danger)';
+                } else {
+                    sqliBadge.innerText = 'SECURE';
+                    sqliBadge.className = 'status-badge status-success';
+                    document.getElementById('result-sqli').style.borderColor = 'var(--success)';
+                }
+                document.getElementById('details-sqli').innerText = data.sqli.details;
+
+            } catch (error) {
+                alert("Scan failed: " + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="play"></i> Start Security Scan';
+                lucide.createIcons();
+            }
+        });
+
+        // --- Lab Status Bar Logic ---
+        function updateLabTimestamp() {
+            const el = document.getElementById('lab-last-updated');
+            const now = new Date();
+            el.textContent = 'Last updated: ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+
+        function setPill(id, type, label) {
+            const el = document.getElementById(id);
+            el.className = 'exp-pill ' + type;
+            el.innerHTML = '<span class="exp-pill-dot"></span> ' + label;
+        }
+
+        // Update XSS status when XSS form is submitted
+        document.querySelector('form[action="/search"]').addEventListener('submit', function() {
+            const val = this.querySelector('input[name="q"]').value.trim();
+            const xssVal = document.getElementById('xss-status-val');
+            if (val) {
+                xssVal.textContent = '"' + val.substring(0, 18) + (val.length > 18 ? '…' : '') + '"';
+                setPill('xss-status-pill', 'tested', 'Payload Sent');
+                // Check for common XSS script pattern
+                if (/<script|onerror|javascript:/i.test(val)) {
+                    setPill('xss-status-pill', 'vuln', 'Payload Active');
+                    xssVal.textContent = '⚠ XSS Payload Detected';
+                }
+            }
+            updateLabTimestamp();
+            recalcOverallRisk();
+        });
+
+        // Update SQLi status when SQLi form is submitted
+        document.querySelector('form[action="/login"]').addEventListener('submit', function() {
+            const u = this.querySelector('input[name="username"]').value.trim();
+            const sqliVal = document.getElementById('sqli-status-val');
+            if (u) {
+                sqliVal.textContent = '"' + u.substring(0, 18) + (u.length > 18 ? '…' : '') + '"';
+                setPill('sqli-status-pill', 'tested', 'Credentials Sent');
+                if (/['"\-\-;=]/.test(u)) {
+                    setPill('sqli-status-pill', 'vuln', 'Injection Detected');
+                    sqliVal.textContent = '⚠ SQLi Pattern Detected';
+                }
+            }
+            updateLabTimestamp();
+            recalcOverallRisk();
+        });
+
+        // Hook into the DAST scanner button to update status
+        const origScanBtn = document.getElementById('btn-start-scan');
+        origScanBtn.addEventListener('click', function() {
+            setPill('dast-status-pill', 'running', 'Scanning...');
+            document.getElementById('dast-status-val').textContent = 'In Progress';
+            updateLabTimestamp();
+        }, true); // capture phase - runs before the existing listener
+
+        // After DAST scan, update status based on result
+        const origScanFetch = window.fetch;
+        window.fetch = async function(url, opts) {
+            const res = await origScanFetch(url, opts);
+            if (typeof url === 'string' && url.includes('/scan')) {
+                const cloned = res.clone();
+                cloned.json().then(data => {
+                    if (data && data.xss !== undefined) {
+                        const vulnFound = data.xss.vulnerable || data.sqli.vulnerable;
+                        if (vulnFound) {
+                            setPill('dast-status-pill', 'vuln', 'Vulnerabilities Found');
+                            document.getElementById('dast-status-val').textContent = '⚠ Issues Detected';
+                        } else {
+                            setPill('dast-status-pill', 'secure', 'All Clear');
+                            document.getElementById('dast-status-val').textContent = '✓ No Issues';
+                        }
+                        updateLabTimestamp();
+                        recalcOverallRisk();
+                    }
+                }).catch(() => {});
+            }
+            return res;
+        };
+
+        function recalcOverallRisk() {
+            const xssPill  = document.getElementById('xss-status-pill').className;
+            const sqliPill = document.getElementById('sqli-status-pill').className;
+            const dastPill = document.getElementById('dast-status-pill').className;
+            const riskVal  = document.getElementById('overall-risk-val');
+            const riskPill = document.getElementById('overall-risk-pill');
+
+            const hasVuln = xssPill.includes('vuln') || sqliPill.includes('vuln') || dastPill.includes('vuln');
+            const hasTested = xssPill.includes('tested') || sqliPill.includes('tested') || dastPill.includes('secure');
+
+            if (hasVuln) {
+                riskVal.textContent = 'High Risk';
+                riskVal.style.color = '#f87171';
+                setPill('overall-risk-pill', 'vuln', 'VULNERABLE');
+            } else if (hasTested) {
+                riskVal.textContent = 'Under Review';
+                riskVal.style.color = '#fbbf24';
+                setPill('overall-risk-pill', 'tested', 'Monitoring');
+            } else {
+                riskVal.textContent = 'Unknown';
+                riskVal.style.color = '#e2e8f0';
+                setPill('overall-risk-pill', 'idle', 'No Data');
+            }
+        }
+
+        // Check if XSS result already exists on page load (Jinja rendered)
+        (function initLabStatus() {
+            {% if query %}
+            const qVal = {{ query | tojson }};
+            document.getElementById('xss-status-val').textContent = '"' + qVal.substring(0, 18) + (qVal.length > 18 ? '…' : '') + '"';
+            if (/<script|onerror|javascript:/i.test(qVal)) {
+                setPill('xss-status-pill', 'vuln', 'Payload Active');
+                document.getElementById('xss-status-val').textContent = '⚠ XSS Payload Detected';
+            } else {
+                setPill('xss-status-pill', 'tested', 'Payload Sent');
+            }
+            document.getElementById('lab-last-updated').textContent = 'Last updated: ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            recalcOverallRisk();
+            {% endif %}
+        })();
+
+        // ===== EXPERIMENT PLAN — LIVE TRACKING =====
+        const EXP_STORAGE_KEY = 'devsecops_exp_plan';
+
+        function loadExpState() {
+            try {
+                const saved = localStorage.getItem(EXP_STORAGE_KEY);
+                if (saved) return JSON.parse(saved);
+            } catch(e) {}
+            // Default: exp1 is done because the app is running
+            return { '1':'done', '2':'pending', '3':'pending', '4':'pending', '5':'pending', '6':'pending' };
+        }
+
+        function saveExpState(state) {
+            localStorage.setItem(EXP_STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function setExpStepUI(expNum, status) {
+            // status: 'pending' | 'active' | 'done' | 'warn'
+            const stepEl = document.querySelector('[data-exp="' + expNum + '"]');
+            if (!stepEl) return;
+            const numEl = stepEl.querySelector('.exp-step-num');
+            const statusEl = stepEl.querySelector('.exp-step-status');
+
+            // Reset classes
+            numEl.className = 'exp-step-num';
+            statusEl.className = 'exp-step-status';
+
+            if (status === 'done') {
+                numEl.classList.add('step-num-done');
+                numEl.innerHTML = '<i data-lucide="check" style="width:14px;height:14px;"></i>';
+                statusEl.classList.add('step-done');
+                statusEl.innerHTML = '<i data-lucide="check-circle-2" style="width:11px;height:11px;"></i> Completed';
+            } else if (status === 'active') {
+                numEl.classList.add('step-num-active');
+                numEl.textContent = expNum;
+                statusEl.classList.add('step-active');
+                statusEl.innerHTML = '<i data-lucide="loader-2" style="width:11px;height:11px;"></i> In Progress';
+            } else if (status === 'warn') {
+                numEl.classList.add('step-num-pending');
+                numEl.textContent = expNum;
+                statusEl.classList.add('step-warn');
+                statusEl.innerHTML = '<i data-lucide="alert-triangle" style="width:11px;height:11px;"></i> Planned';
+            } else {
+                numEl.classList.add('step-num-pending');
+                numEl.textContent = expNum;
+                statusEl.classList.add('step-pending');
+                statusEl.innerHTML = '<i data-lucide="circle" style="width:11px;height:11px;"></i> Pending';
+            }
+        }
+
+        function updatePlanProgress(state) {
+            const total = 6;
+            const doneCount = Object.values(state).filter(s => s === 'done').length;
+            const pct = Math.round((doneCount / total) * 100);
+            document.getElementById('plan-progress-fill').style.width = pct + '%';
+            document.getElementById('plan-progress-pct').textContent = doneCount + ' / ' + total + ' Done';
+        }
+
+        function renderExpPlan() {
+            const state = loadExpState();
+            for (let i = 1; i <= 6; i++) {
+                setExpStepUI(String(i), state[String(i)]);
+            }
+            updatePlanProgress(state);
+            lucide.createIcons();
+        }
+
+        function markExp(expNum, status) {
+            const state = loadExpState();
+            state[String(expNum)] = status;
+            saveExpState(state);
+            renderExpPlan();
+        }
+
+        // --- Exp 1: Auto-completed (app is running) ---
+        markExp(1, 'done');
+
+        // --- Exp 2: XSS form submission ---
+        document.querySelector('form[action="/search"]').addEventListener('submit', function() {
+            markExp(2, 'active');
+        });
+        {% if query %}
+        markExp(2, 'done');
+        {% endif %}
+
+        // --- Exp 3: SQLi form submission ---
+        document.querySelector('form[action="/login"]').addEventListener('submit', function() {
+            markExp(3, 'active');
+            // After the form submits and page reloads, we check for login result
+            localStorage.setItem('exp3_submitted', 'true');
+        });
+        // Check if SQLi was just submitted (page reload after POST)
+        if (localStorage.getItem('exp3_submitted') === 'true') {
+            markExp(3, 'done');
+            localStorage.removeItem('exp3_submitted');
+        }
+
+        // --- Exp 4: DAST scan ---
+        document.getElementById('btn-start-scan').addEventListener('click', function() {
+            markExp(4, 'active');
+        }, true);
+        // Intercept scan results to mark as done
+        const _origFetchForPlan = window.fetch;
+        window.fetch = async function(url, opts) {
+            const res = await _origFetchForPlan(url, opts);
+            if (typeof url === 'string' && url.includes('/scan')) {
+                const cloned = res.clone();
+                cloned.json().then(data => {
+                    if (data && data.xss !== undefined) {
+                        markExp(4, 'done');
+                    }
+                }).catch(() => {});
+            }
+            return res;
+        };
+
+        // --- Exp 5: SAST via repo analysis (Analyze Repository button) ---
+        document.getElementById('btn-fetch-metrics').addEventListener('click', function() {
+            markExp(5, 'active');
+        }, true);
+        // Intercept repo-metrics results to mark as done
+        const _origFetchForPlan2 = window.fetch;
+        window.fetch = async function(url, opts) {
+            const res = await _origFetchForPlan2(url, opts);
+            if (typeof url === 'string' && url.includes('/repo-metrics')) {
+                const cloned = res.clone();
+                cloned.json().then(data => {
+                    if (data && data.metrics) {
+                        markExp(5, 'done');
+                    }
+                }).catch(() => {});
+            }
+            return res;
+        };
+
+        // --- Exp 6: Marked done when both Exp 4 and Exp 5 are done ---
+        function checkExp6() {
+            const state = loadExpState();
+            if (state['4'] === 'done' && state['5'] === 'done') {
+                markExp(6, 'done');
+            } else if (state['4'] === 'done' || state['5'] === 'done') {
+                markExp(6, 'warn');
+            }
+        }
+        // Run check after each render
+        const _origMarkExp = markExp;
+        // Use MutationObserver to auto-check exp6 whenever progress updates
+        setInterval(checkExp6, 2000);
+
+        // --- Add reset button functionality ---
+        // Allow users to reset all progress
+        const resetLink = document.createElement('a');
+        resetLink.textContent = 'Reset Progress';
+        resetLink.href = '#';
+        resetLink.style.cssText = 'font-size:0.72rem;color:#64748b;text-decoration:underline;cursor:pointer;margin-left:auto;';
+        resetLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem(EXP_STORAGE_KEY);
+            localStorage.removeItem('exp3_submitted');
+            renderExpPlan();
+            markExp(1, 'done'); // App is still running
+        });
+        document.querySelector('.exp-plan-header').appendChild(resetLink);
+
+        // Initial render
+        renderExpPlan();
     </script>
 </body>
 
