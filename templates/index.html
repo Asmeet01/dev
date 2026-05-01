@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +26,11 @@
             --border: #e2e8f0;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -68,7 +73,7 @@
         .card {
             background: var(--bg-card);
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             padding: 24px;
             margin-bottom: 24px;
             border: 1px solid var(--border);
@@ -198,8 +203,13 @@
             color: var(--text-muted);
         }
 
-        .value.text-success { color: var(--success); }
-        .value.text-warning { color: var(--warning); }
+        .value.text-success {
+            color: var(--success);
+        }
+
+        .value.text-warning {
+            color: var(--warning);
+        }
 
         /* --- Table / Recent Runs --- */
         .section-title {
@@ -226,10 +236,19 @@
             align-items: center;
         }
 
-        .run-item:last-child { border-bottom: none; }
+        .run-item:last-child {
+            border-bottom: none;
+        }
 
-        .run-info h4 { font-size: 1rem; margin-bottom: 4px; }
-        .run-meta { font-size: 0.875rem; color: var(--text-muted); }
+        .run-info h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .run-meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
 
         .status-badge {
             padding: 4px 12px;
@@ -239,8 +258,15 @@
             text-transform: uppercase;
         }
 
-        .status-success { background: #d1fae5; color: #065f46; }
-        .status-failure { background: #fee2e2; color: #991b1b; }
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-failure {
+            background: #fee2e2;
+            color: #991b1b;
+        }
 
         /* --- Lab Exercises (The "Information") --- */
         .lab-grid {
@@ -288,17 +314,31 @@
         }
 
         @media (max-width: 1024px) {
-            .repo-bar { grid-template-columns: 1fr 1fr; }
-            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-            .lab-grid { grid-template-columns: 1fr; }
+            .repo-bar {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .lab-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 640px) {
-            .repo-bar { grid-template-columns: 1fr; }
-            .metrics-grid { grid-template-columns: 1fr; }
+            .repo-bar {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -400,9 +440,11 @@
             <!-- XSS Lab -->
             <div class="card lab-card">
                 <h3><i data-lucide="terminal"></i> Reflected XSS (T1189)</h3>
-                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">Test how unsanitized inputs affect the browser environment.</p>
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">Test how unsanitized
+                    inputs affect the browser environment.</p>
                 <form action="/search" method="get" class="lab-form">
-                    <input type="text" name="q" placeholder="Enter payload (e.g. <script>alert(1)</script>)" value="{{ query if query else '' }}">
+                    <input type="text" name="q" placeholder="Enter payload (e.g. <script>alert(1)</script>)"
+                        value="{{ query if query else '' }}">
                     <button type="submit" class="lab-btn">Execute Test</button>
                 </form>
                 {% if query %}
@@ -415,7 +457,8 @@
             <!-- SQLi Lab -->
             <div class="card lab-card">
                 <h3><i data-lucide="database"></i> SQL Injection (T1190)</h3>
-                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">Attempt to bypass authentication using SQL interpolation flaws.</p>
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">Attempt to bypass
+                    authentication using SQL interpolation flaws.</p>
                 <form action="/login" method="post" class="lab-form">
                     <input type="text" name="username" placeholder="Username (Try: ' OR '1'='1)">
                     <input type="password" name="password" placeholder="Password (Any)">
@@ -434,6 +477,5 @@
         lucide.createIcons();
     </script>
 </body>
-</html>
-body>
+
 </html>
