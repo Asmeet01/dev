@@ -22,3 +22,4 @@ idna==3.10
 
 # Production Server
 gunicorn==23.0.0
+waitress==3.0.1

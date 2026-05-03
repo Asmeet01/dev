@@ -243,4 +243,11 @@ if __name__ == '__main__':
     # Running on 0.0.0.0 to allow container/external access
     # Use environment variable to toggle debug mode (default: False for security)
     debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
-    app.run(host='0.0.0.0', port=5000, debug=debug_mode)
+    
+    if debug_mode:
+        print("Starting in DEBUG mode...")
+        app.run(host='0.0.0.0', port=5000, debug=True)
+    else:
+        from waitress import serve
+        print("Starting production server on http://0.0.0.0:5000")
+        serve(app, host='0.0.0.0', port=5000)
