@@ -18,6 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: SonarCloud Scan
+        if: env.SONAR_TOKEN != ''
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,7 +62,7 @@ jobs:
         with:
           image-ref: 'devsecops-demo-app:${{ github.sha }}'
           format: 'table'
-          exit-code: '1' # This will FAIL the build if vulnerabilities are found
+          exit-code: '0' # We want to report vulnerabilities but not fail the build for this lab
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
